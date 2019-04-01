@@ -3,6 +3,7 @@ const autoprefixer = require('autoprefixer');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const CleanWebpackPlugin = require('clean-webpack-plugin');
+const WebpackModules = require('webpack-modules'); // remove after alpha-3
 
 const isProduction = process.env.NODE_ENV === 'production';
 
@@ -45,11 +46,13 @@ const config = {
                 ]
             },
 
-            { enforce: 'pre', test: /\.js$/, loader: 'source-map-loader' }
+            { enforce: 'pre', test: /\.js$/, loader: 'source-map-loader' },
+            { test: /\.mjs$/, type: 'javascript/auto' }
         ]
     },
 
     plugins: [
+        new WebpackModules(), // remove after alpha-3
         new HtmlWebpackPlugin({
             template: path.join(__dirname, 'templates', 'index.html')
         })
